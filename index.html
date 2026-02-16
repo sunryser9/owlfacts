@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free 2026 EES Schengen Calculator | Avoid €5,000 Fines | OwlFacts</title>
+    <meta name="description" content="Free Schengen 90/180 calculator for 2026 EES compliance. Track your days, avoid overstay fines up to €5,000. Built for UK & US citizens.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Free 2026 EES Schengen Calculator - OwlFacts">
+    <meta property="og:description" content="Track your Schengen days and avoid €5,000 fines with our free 2026 EES-compliant calculator.">
+    <meta property="og:url" content="https://owlfacts.com">
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "OwlFacts Schengen Calculator",
+      "applicationCategory": "TravelApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free 2026 EES-compliant Schengen 90/180 calculator for UK and US citizens",
+      "operatingSystem": "Any",
+      "url": "https://owlfacts.com"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Crimson+Pro:wght@300;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="owl-icon">??</span>
+                <h1>OwlFacts</h1>
+            </div>
+            <p class="tagline">Be Wise About Your Travel • Avoid €5,000 Fines</p>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="badge">2026 EES COMPLIANT</div>
+            <h2 class="hero-title">Free 2026 EES Schengen 90/180 Calculator</h2>
+            <p class="hero-subtitle">Track your Schengen days with precision. Built on the official EU rolling-window algorithm.</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-card">
+                <div class="status-display" id="statusDisplay">
+                    <div class="status-icon">?</div>
+                    <div class="status-text">
+                        <h3>You are Safe</h3>
+                        <div class="days-remaining">
+                            <span class="days-number" id="daysRemaining">90</span>
+                            <span class="days-label">Days Remaining in Schengen Area</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calculator-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="entryDate">ENTRY DATE</label>
+                            <input type="date" id="entryDate" class="date-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="exitDate">EXIT DATE</label>
+                            <input type="date" id="exitDate" class="date-input">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="addTrip">Add Trip to Timeline</button>
+                        <button class="btn btn-secondary" id="clearHistory">Clear History</button>
+                    </div>
+                </div>
+
+                <div class="trip-timeline" id="tripTimeline">
+                    <!-- Trips will be added here dynamically -->
+                </div>
+
+                <!-- Affiliate Section -->
+                <div class="affiliate-section">
+                    <h4>??? Essential Travel Resources</h4>
+                    <div class="affiliate-links">
+                        <a href="#" class="affiliate-card" data-affiliate="safetywing">
+                            <span class="affiliate-icon">???</span>
+                            <div>
+                                <strong>SafetyWing Insurance</strong>
+                                <small>$45/mo • Covers repatriation</small>
+                            </div>
+                        </a>
+                        <a href="#" class="affiliate-card" data-affiliate="wise">
+                            <span class="affiliate-icon">??</span>
+                            <div>
+                                <strong>Wise Account</strong>
+                                <small>Fee-free transfers • 16M+ travelers</small>
+                            </div>
+                        </a>
+                        <a href="#" class="affiliate-card" data-affiliate="airalo">
+                            <span class="affiliate-icon">??</span>
+                            <div>
+                                <strong>Airalo eSIM</strong>
+                                <small>Stay connected across borders</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Capture -->
+            <div class="email-capture">
+                <h3>?? Get Schengen Day Reminders</h3>
+                <p>We'll email you when you have 30 days left, 7 days left, and important 2026 EES updates</p>
+                <form class="email-form" id="emailForm">
+                    <input type="email" placeholder="your@email.com" required>
+                    <button type="submit" class="btn btn-primary">Remind Me</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <h2>About OwlFacts</h2>
+            <p>OwlFacts provides UK, US, and non-EU citizens with precision tracking for the 2026 Entry/Exit System (EES). Our tool is built on the official EU rolling-window algorithm to protect you from entry bans and fines.</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2>Traveler FAQ 2026</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>1. How is the 90-day limit calculated in 2026?</h3>
+                    <p>It is a rolling 180-day window. On any day you are in Schengen, you look back at the last 180 days. Total stay must not exceed 90 days.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>2. Does the day of entry count?</h3>
+                    <p>Yes. Both the day you enter and the day you exit count as full days spent within the Schengen Area.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>3. What is the EES (Entry/Exit System)?</h3>
+                    <p>Launching fully by April 2026, EES replaces manual passport stamps with biometric tracking to detect overstays automatically.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>4. Do UK citizens need a visa in 2026?</h3>
+                    <p>No visa is required for under 90 days, but you must register with EES and, by late 2026, have an ETIAS authorization.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>5. Which countries are in the Schengen Zone?</h3>
+                    <p>Includes 29 countries like France, Germany, Spain, and newest members Bulgaria and Romania. Ireland is NOT included.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>6. Can I "reset" my days by leaving for one day?</h3>
+                    <p>No. You must wait for older stay days to "fall out" of the 180-day window before you gain new days.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>7. What happens if I overstay?</h3>
+                    <p>Biometric tracking makes overstaying impossible to hide. Fines can reach €5,000 with entry bans up to 5 years.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <article class="content-article">
+                <h2>2026 EES Updates: What Changed for Schengen Travelers</h2>
+                <p>The Entry/Exit System (EES) represents the most significant change to Schengen border control in decades. Starting in April 2026, all non-EU visitors will have their entries and exits recorded biometrically, replacing traditional passport stamps with digital tracking.</p>
+                
+                <p>This new system makes the Schengen 90/180 rule enforcement automatic and unavoidable. Border guards can instantly see your complete travel history across all 29 Schengen countries. There's no way to "reset" your count by visiting a different entry point or hoping stamps weren't properly recorded.</p>
+
+                <h3>How EES Affects UK and US Citizens</h3>
+                <p>If you're from the UK or United States, you can still visit the Schengen Area without a visa for tourism or business. However, you must now register with the EES on your first entry after April 2026. This involves providing biometric data (fingerprints and facial scan) at the border.</p>
+
+                <p>By late 2026, UK and US citizens will also need ETIAS (European Travel Information and Authorization System) approval before traveling. This is similar to the US ESTA system - a simple online application that costs €7 and is valid for three years.</p>
+
+                <h3>Schengen Overstay Penalties in 2026</h3>
+                <p>The consequences of overstaying your Schengen allowance have become more severe with automated enforcement. Penalties now include:</p>
+                
+                <ul>
+                    <li>Fines ranging from €500 to €5,000 depending on the duration of overstay</li>
+                    <li>Entry bans lasting 1-5 years across all Schengen countries</li>
+                    <li>Automatic detention at the border until deportation arrangements are made</li>
+                    <li>Future visa applications rejected due to overstay record</li>
+                </ul>
+
+                <p>These penalties are now enforced consistently across all member states thanks to the centralized EES database.</p>
+
+                <h3>How to Maximize Your 90 Days in Europe</h3>
+                <p>Strategic planning can help you extend your European adventure while staying compliant with the 90/180 rule. Here are proven strategies used by digital nomads and long-term travelers:</p>
+
+                <p><strong>Split Your Time:</strong> Spend 89 days in Schengen, then 91 days outside the area. This pattern allows you to spend roughly half the year in Europe. Popular non-Schengen destinations for the "break" period include the UK, Ireland, Albania, Serbia, Turkey, and Morocco.</p>
+
+                <p><strong>Apply for Long-Stay Visas:</strong> If you plan to stay in one country for 90+ days, consider applying for a national long-stay visa. Countries like Portugal, Spain, and France offer digital nomad visas that exempt you from the 90/180 rule entirely.</p>
+
+                <p><strong>Use This Calculator:</strong> Track your days meticulously using our free calculator. Add all past trips to see exactly how many days you have remaining and when old trips will "fall out" of your 180-day window.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms</a></p>
+            <p>© 2026 OwlFacts.com | contact@owlfacts.com</p>
+            <p class="compliance">Compliant with EU Border Handbook v2026</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
