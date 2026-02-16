@@ -82,34 +82,41 @@ class SchengenCalculator {
         return Math.max(0, 90 - totalDays);
     }
 
-    updateDisplay() {
-        const remaining = this.calculateRemainingDays();
-        const statusDisplay = document.getElementById('statusDisplay');
-        const daysRemainingEl = document.getElementById('daysRemaining');
+   updateDisplay() {
+    const remaining = this.calculateRemainingDays();
+    const statusDisplay = document.getElementById('statusDisplay');
+    const daysRemainingEl = document.getElementById('daysRemaining');
+    const statusIcon = statusDisplay.querySelector('.status-icon');
+    const statusTitle = statusDisplay.querySelector('h3');
 
-        daysRemainingEl.textContent = remaining;
+    // Update the days number
+    daysRemainingEl.textContent = remaining;
 
-        // Update status styling
-        statusDisplay.classList.remove('warning', 'danger');
-        
-        if (remaining <= 0) {
-            statusDisplay.classList.add('danger');
-            statusDisplay.querySelector('.status-icon').textContent = '??';
-            statusDisplay.querySelector('h3').textContent = 'You are Over Limit';
-        } else if (remaining <= 10) {
-            statusDisplay.classList.add('danger');
-            statusDisplay.querySelector('.status-icon').textContent = '??';
-            statusDisplay.querySelector('h3').textContent = 'Critical - Low Days';
-        } else if (remaining <= 30) {
-            statusDisplay.classList.add('warning');
-            statusDisplay.querySelector('.status-icon').textContent = '?';
-            statusDisplay.querySelector('h3').textContent = 'Warning - Running Low';
-        } else {
-            statusDisplay.querySelector('.status-icon').textContent = '?';
-            statusDisplay.querySelector('h3').textContent = 'You are Safe';
-        }
+    // Remove all status classes first
+    statusDisplay.classList.remove('warning', 'danger');
+    
+    // Update based on remaining days
+    if (remaining <= 0) {
+        statusDisplay.classList.add('danger');
+        statusIcon.textContent = '⚠️';
+        statusTitle.textContent = 'DANGER - Over Limit';
+    } else if (remaining <= 10) {
+        statusDisplay.classList.add('danger');
+        statusIcon.textContent = '⚠️';
+        statusTitle.textContent = 'DANGER - Critical';
+    } else if (remaining <= 30) {
+        statusDisplay.classList.add('warning');
+        statusIcon.textContent = '⚡';
+        statusTitle.textContent = 'WARNING - Low Days';
+    } else {
+        statusIcon.textContent = '✅';
+        statusTitle.textContent = 'SAFE - You\'re Good';
     }
-
+        // Safe - green (default styling)
+        statusIcon.textContent = '✅';
+        statusTitle.textContent = 'SAFE - You\'re Good';
+    }
+}
     addTripToTimeline(trip) {
         const timeline = document.getElementById('tripTimeline');
         
@@ -124,7 +131,7 @@ class SchengenCalculator {
                 </div>
                 <div class="trip-duration">${trip.days} days</div>
             </div>
-            <button class="trip-remove" onclick="calculator.removeTrip(${trip.id})">�</button>
+            <button class="trip-remove" onclick="calculator.removeTrip(${trip.id})">×</button>
         `;
         
         timeline.appendChild(tripEl);
@@ -216,3 +223,4 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 // gtag('config', 'G-XXXXXXXXXX'); // Add your Google Analytics ID
+
