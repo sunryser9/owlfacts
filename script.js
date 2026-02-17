@@ -68,28 +68,30 @@
         }
 
         calculateRemainingDays() {
-            const today = new Date();
-            const lookbackDate = new Date(today);
-            lookbackDate.setDate(lookbackDate.getDate() - 180);
+    const today = new Date();
+    const lookbackDate = new Date(today);
+    lookbackDate.setDate(lookbackDate.getDate() - 180);
 
-            let totalDays = 0;
+    let totalDays = 0;
 
-            this.trips.forEach(trip => {
-                const tripEntry = new Date(trip.entry);
-                const tripExit = new Date(trip.exit);
+    this.trips.forEach(trip => {
+        const tripEntry = new Date(trip.entry);
+        const tripExit = new Date(trip.exit);
 
-                if (tripExit >= lookbackDate) {
-                    const countFrom = tripEntry < lookbackDate ? lookbackDate : tripEntry;
-                    const countTo = tripExit > today ? today : tripExit;
-                    
-                    if (countTo >= countFrom) {
-                        totalDays += this.calculateDays(countFrom, countTo);
-                    }
-                }
-            });
-
-            return Math.max(0, 90 - totalDays);
+        // Count ALL trips (past, current AND future) within 180-day window
+        if (tripExit >= lookbackDate) {
+            const countFrom = tripEntry < lookbackDate ? lookbackDate : tripEntry;
+            // KEY FIX: Remove the "today" cap so future trips count too
+            const countTo = tripExit;
+            
+            if (countTo >= countFrom) {
+                totalDays += this.calculateDays(countFrom, countTo);
+            }
         }
+    });
+
+    return Math.max(0, 90 - totalDays);
+}
 
         updateDisplay() {
             const remaining = this.calculateRemainingDays();
