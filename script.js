@@ -225,11 +225,11 @@
     // Affiliate link tracking
     function initAffiliateLinks() {
         const affiliateLinks = {
-            safetywing: 'https://safetywing.com/nomad-insurance/',
-            wise: 'https://wise.com',
-            airalo: 'https://www.airalo.com'
-        };
-
+    safetywing: 'https://safetywing.com/?referenceID=26451862&utm_source=26451862&utm_medium=Ambassador',
+    wise: 'https://wise.com/invite/drhc/3ced2f',
+    airalo: 'https://www.airalo.com'
+};
+        
         document.querySelectorAll('[data-affiliate]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
