@@ -2,8 +2,49 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://owlfacts.com/</loc>
-    <lastmod>2026-02-16</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-02-17</lastmod>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://owlfacts.com/blog/</loc>
+    <lastmod>2026-02-17</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://owlfacts.com/blog/ees-2026-uk-citizens-guide.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://owlfacts.com/blog/how-to-calculate-schengen-days.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://owlfacts.com/blog/schengen-overstay-fines-2026.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://owlfacts.com/blog/digital-nomad-schengen-guide.html</loc>
+    <lastmod>2026-02-17</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>
+```
+
+5. Click **"Commit changes"**
+6. Click **"Commit changes"** again
+
+---
+
+## Fix 2: Resubmit Sitemap to Google
+
+After committing:
+
+1. Go back to Google Search Console
+2. Click **"Sitemaps"** in left sidebar
+3. Delete the old ones if you can
+4. In the **"Add new sitemap"** box type:
+```
+   sitemap.xml
