@@ -257,21 +257,45 @@
 
             const email = emailInput.value;
             const remaining = this.calculateRemainingDays();
-
-            // TODO: Replace this with your actual email service (Mailchimp, ConvertKit, etc.)
-            // Example fetch to your backend:
-            // fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email, remaining }) })
-
-            console.log('Email signup:', email, '| Days remaining:', remaining);
-
-            // Show confirmation — replace alert with inline message for better UX
             const btn = e.target.querySelector('button[type="submit"]');
+
+            // Show sending state
             if (btn) {
-                btn.textContent = '&#x2713; You\'re protected!';
+                btn.textContent = 'Sending...';
                 btn.disabled = true;
             }
-            emailInput.value = '';
-            emailInput.placeholder = 'Subscribed! Check your inbox.';
+
+            // Formspree integration
+            fetch('https://formspree.io/f/mwvndyrj', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    days_remaining: remaining,
+                    source: 'owlfacts-calculator'
+                })
+            })
+            .then(res => {
+                if (res.ok) {
+                    // Success
+                    if (btn) btn.innerHTML = '&#x2705; You\'re protected!';
+                    emailInput.value = '';
+                    emailInput.placeholder = 'Subscribed! Check your inbox.';
+                } else {
+                    // Server error
+                    if (btn) {
+                        btn.textContent = 'Try again';
+                        btn.disabled = false;
+                    }
+                }
+            })
+            .catch(() => {
+                // Network error
+                if (btn) {
+                    btn.textContent = 'Try again';
+                    btn.disabled = false;
+                }
+            });
         }
     }
 
