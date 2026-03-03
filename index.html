@@ -40,17 +40,19 @@
     <header class="header">
         <div class="container">
             <div class="logo">
-                <span class="owl-icon">??</span>
+                <!-- FIX: Use HTML entity for owl emoji to avoid encoding issues -->
+                <span class="owl-icon">&#x1F989;</span>
                 <h1>OwlFacts</h1>
             </div>
-            <p class="tagline">Be Wise About Your Travel • Avoid €5,000 Fines</p>
+            <p class="tagline">Be Wise About Your Travel &bull; Avoid &euro;5,000 Fines</p>
         </div>
     </header>
+
     <nav style="background:#4A7C2B;padding:12px 0;text-align:center">
-    <a href="/blog/" style="color:#FCD34D;font-family:'Space Mono',monospace;font-size:14px;text-decoration:none;margin:0 24px">📚 Travel Guides</a>
-    <a href="/blog/ees-2026-uk-citizens-guide.html" style="color:white;font-family:'Space Mono',monospace;font-size:14px;text-decoration:none;margin:0 24px">EES 2026 Guide</a>
-    <a href="/blog/how-to-calculate-schengen-days.html" style="color:white;font-family:'Space Mono',monospace;font-size:14px;text-decoration:none;margin:0 24px">How to Calculate</a>
-</nav>
+        <a href="/blog/" style="color:#FCD34D;font-family:'Space Mono',monospace;font-size:14px;text-decoration:none;margin:0 24px">&#x1F4DA; Travel Guides</a>
+        <a href="/blog/ees-2026-uk-citizens-guide.html" style="color:white;font-family:'Space Mono',monospace;font-size:14px;text-decoration:none;margin:0 24px">EES 2026 Guide</a>
+        <a href="/blog/how-to-calculate-schengen-days.html" style="color:white;font-family:'Space Mono',monospace;font-size:14px;text-decoration:none;margin:0 24px">How to Calculate</a>
+    </nav>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -66,9 +68,9 @@
         <div class="container">
             <div class="calculator-card">
                 <div class="status-display" id="statusDisplay">
-                    <div class="status-icon">?</div>
+                    <div class="status-icon" id="statusIcon">&#x2705;</div>
                     <div class="status-text">
-                        <h3>You are Safe</h3>
+                        <h3 id="statusLabel">&#x2705; SAFE - You're Good</h3>
                         <div class="days-remaining">
                             <span class="days-number" id="daysRemaining">90</span>
                             <span class="days-label">Days Remaining in Schengen Area</span>
@@ -98,43 +100,48 @@
                     <!-- Trips will be added here dynamically -->
                 </div>
 
-                <!-- Affiliate Section -->
-                <div class="affiliate-section">
-                    <h4>??? Essential Travel Resources</h4>
+                <!-- CONTEXTUAL Affiliate Section — shown dynamically based on days remaining -->
+                <div class="affiliate-section" id="affiliateSection">
+                    <h4>&#x1F9ED; Essential Travel Resources</h4>
+
+                    <!-- Contextual message shown after calculation -->
+                    <div id="contextualMessage" class="contextual-message" style="display:none;"></div>
+
                     <div class="affiliate-links">
-                        <a href="#" class="affiliate-card" data-affiliate="safetywing">
-                            <span class="affiliate-icon">???</span>
+                        <a href="https://safetywing.com/?referenceID=owlfacts" target="_blank" rel="noopener" class="affiliate-card" data-affiliate="safetywing" id="cardSafetywing">
+                            <span class="affiliate-icon">&#x1F6E1;&#xFE0F;</span>
                             <div>
                                 <strong>SafetyWing Insurance</strong>
-                                <small>$45/mo • Covers repatriation</small>
+                                <small>$45/mo &bull; Covers repatriation &amp; medical</small>
                             </div>
                         </a>
-                        <a href="#" class="affiliate-card" data-affiliate="wise">
-                            <span class="affiliate-icon">??</span>
+                        <a href="https://wise.com/invite/owlfacts" target="_blank" rel="noopener" class="affiliate-card" data-affiliate="wise" id="cardWise">
+                            <span class="affiliate-icon">&#x1F4B8;</span>
                             <div>
                                 <strong>Wise Account</strong>
-                                <small>Fee-free transfers • 16M+ travelers</small>
+                                <small>Fee-free transfers &bull; 16M+ travelers</small>
                             </div>
                         </a>
-                        <a href="#" class="affiliate-card" data-affiliate="airalo">
-                            <span class="affiliate-icon">??</span>
+                        <a href="https://www.airalo.com/?p=owlfacts" target="_blank" rel="noopener" class="affiliate-card" data-affiliate="airalo" id="cardAiralo">
+                            <span class="affiliate-icon">&#x1F4F1;</span>
                             <div>
                                 <strong>Airalo eSIM</strong>
-                                <small>Stay connected across borders</small>
+                                <small>Stay connected across 29 Schengen countries</small>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Email Capture -->
+            <!-- Email Capture — stronger urgency copy -->
             <div class="email-capture">
-                <h3>?? Get Schengen Day Reminders</h3>
-                <p>We'll email you when you have 30 days left, 7 days left, and important 2026 EES updates</p>
+                <h3>&#x26A0;&#xFE0F; Don't Accidentally Overstay &amp; Face a &euro;5,000 Fine</h3>
+                <p>Get a personal alert when you have <strong>30 days left</strong>, <strong>7 days left</strong>, and critical <strong>2026 EES updates</strong> before they affect your travel.</p>
                 <form class="email-form" id="emailForm">
                     <input type="email" placeholder="your@email.com" required>
-                    <button type="submit" class="btn btn-primary">Remind Me</button>
+                    <button type="submit" class="btn btn-primary">&#x1F514; Warn Me Before I Overstay</button>
                 </form>
+                <p class="email-trust">&#x1F512; No spam. Unsubscribe anytime. Used by 2,400+ travelers.</p>
             </div>
         </div>
     </section>
@@ -157,35 +164,29 @@
                     <h3>1. How is the 90-day limit calculated in 2026?</h3>
                     <p>It is a rolling 180-day window. On any day you are in Schengen, you look back at the last 180 days. Total stay must not exceed 90 days.</p>
                 </div>
-
                 <div class="faq-item">
                     <h3>2. Does the day of entry count?</h3>
                     <p>Yes. Both the day you enter and the day you exit count as full days spent within the Schengen Area.</p>
                 </div>
-
                 <div class="faq-item">
                     <h3>3. What is the EES (Entry/Exit System)?</h3>
                     <p>Launching fully by April 2026, EES replaces manual passport stamps with biometric tracking to detect overstays automatically.</p>
                 </div>
-
                 <div class="faq-item">
                     <h3>4. Do UK citizens need a visa in 2026?</h3>
                     <p>No visa is required for under 90 days, but you must register with EES and, by late 2026, have an ETIAS authorization.</p>
                 </div>
-
                 <div class="faq-item">
                     <h3>5. Which countries are in the Schengen Zone?</h3>
                     <p>Includes 29 countries like France, Germany, Spain, and newest members Bulgaria and Romania. Ireland is NOT included.</p>
                 </div>
-
                 <div class="faq-item">
                     <h3>6. Can I "reset" my days by leaving for one day?</h3>
                     <p>No. You must wait for older stay days to "fall out" of the 180-day window before you gain new days.</p>
                 </div>
-
                 <div class="faq-item">
                     <h3>7. What happens if I overstay?</h3>
-                    <p>Biometric tracking makes overstaying impossible to hide. Fines can reach €5,000 with entry bans up to 5 years.</p>
+                    <p>Biometric tracking makes overstaying impossible to hide. Fines can reach &euro;5,000 with entry bans up to 5 years.</p>
                 </div>
             </div>
         </div>
@@ -203,14 +204,14 @@
                 <h3>How EES Affects UK and US Citizens</h3>
                 <p>If you're from the UK or United States, you can still visit the Schengen Area without a visa for tourism or business. However, you must now register with the EES on your first entry after April 2026. This involves providing biometric data (fingerprints and facial scan) at the border.</p>
 
-                <p>By late 2026, UK and US citizens will also need ETIAS (European Travel Information and Authorization System) approval before traveling. This is similar to the US ESTA system - a simple online application that costs €7 and is valid for three years.</p>
+                <p>By late 2026, UK and US citizens will also need ETIAS (European Travel Information and Authorization System) approval before traveling. This is similar to the US ESTA system &mdash; a simple online application that costs &euro;7 and is valid for three years.</p>
 
                 <h3>Schengen Overstay Penalties in 2026</h3>
                 <p>The consequences of overstaying your Schengen allowance have become more severe with automated enforcement. Penalties now include:</p>
                 
                 <ul>
-                    <li>Fines ranging from €500 to €5,000 depending on the duration of overstay</li>
-                    <li>Entry bans lasting 1-5 years across all Schengen countries</li>
+                    <li>Fines ranging from &euro;500 to &euro;5,000 depending on the duration of overstay</li>
+                    <li>Entry bans lasting 1&ndash;5 years across all Schengen countries</li>
                     <li>Automatic detention at the border until deportation arrangements are made</li>
                     <li>Future visa applications rejected due to overstay record</li>
                 </ul>
@@ -233,12 +234,86 @@
     <footer class="footer">
         <div class="container">
             <p><a href="#">Privacy Policy</a> | <a href="#">Terms</a></p>
-            <p>© 2026 OwlFacts.com | contact@owlfacts.com</p>
+            <p>&copy; 2026 OwlFacts.com | contact@owlfacts.com</p>
             <p class="compliance">Compliant with EU Border Handbook v2026</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- Contextual affiliate logic — injected after script.js loads -->
+    <script>
+    // Run after script.js has set up the calculator
+    (function() {
+        function updateContextualAffiliate(daysRemaining) {
+            const msgEl = document.getElementById('contextualMessage');
+            if (!msgEl) return;
+
+            let msg = '';
+            // Highlight relevant card based on situation
+            document.querySelectorAll('.affiliate-card').forEach(c => c.classList.remove('affiliate-highlight'));
+
+            if (daysRemaining <= 0) {
+                msg = '&#x26A0;&#xFE0F; <strong>You have no days left.</strong> You cannot enter Schengen right now. Consider a long-stay visa for Portugal, Spain, or France to stay legally.';
+            } else if (daysRemaining <= 7) {
+                msg = '&#x1F6A8; <strong>Only ' + daysRemaining + ' days left &mdash; critical zone.</strong> Make sure you have travel insurance that covers emergency repatriation if you need to leave urgently.';
+                const c = document.getElementById('cardSafetywing');
+                if (c) c.classList.add('affiliate-highlight');
+            } else if (daysRemaining <= 30) {
+                msg = '&#x23F0; <strong>' + daysRemaining + ' days remaining.</strong> Your Schengen window is closing. Set up a Wise account now to handle money across non-Schengen countries during your break period.';
+                const c = document.getElementById('cardWise');
+                if (c) c.classList.add('affiliate-highlight');
+            } else if (daysRemaining <= 60) {
+                msg = '&#x1F4F1; <strong>' + daysRemaining + ' days remaining &mdash; you\'re in good shape.</strong> Planning to cross multiple countries? An Airalo eSIM keeps you connected across all 29 Schengen states without roaming fees.';
+                const c = document.getElementById('cardAiralo');
+                if (c) c.classList.add('affiliate-highlight');
+            } else {
+                msg = '&#x2705; <strong>' + daysRemaining + ' days remaining &mdash; you\'re safe.</strong> Protect your trip with travel insurance and fee-free money transfers while you explore Europe.';
+            }
+
+            msgEl.innerHTML = msg;
+            msgEl.style.display = msg ? 'block' : 'none';
+        }
+
+        // Hook into the Add Trip button to trigger contextual message
+        const addBtn = document.getElementById('addTrip');
+        if (addBtn) {
+            addBtn.addEventListener('click', function() {
+                // Small delay to let script.js update the daysRemaining element
+                setTimeout(function() {
+                    const daysEl = document.getElementById('daysRemaining');
+                    if (daysEl) {
+                        const days = parseInt(daysEl.textContent, 10);
+                        if (!isNaN(days)) updateContextualAffiliate(days);
+                    }
+                }, 100);
+            });
+        }
+    })();
+    </script>
+
+    <style>
+    .contextual-message {
+        background: #f0f7e6;
+        border-left: 4px solid #4A7C2B;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        border-radius: 4px;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+    .affiliate-highlight {
+        border: 2px solid #4A7C2B !important;
+        background: #f0f7e6 !important;
+        transform: scale(1.02);
+        transition: all 0.2s ease;
+    }
+    .email-trust {
+        font-size: 12px;
+        color: #888;
+        margin-top: 8px;
+        text-align: center;
+    }
+    </style>
 </body>
 </html>
-
