@@ -4,6 +4,13 @@
 (function() {
     'use strict';
 
+    // Real affiliate URLs (already in your code — preserved exactly)
+    const affiliateLinks = {
+        safetywing: 'https://safetywing.com/?referenceID=26451862&utm_source=26451862&utm_medium=Ambassador',
+        wise: 'https://wise.com/invite/drhc/3ced2f',
+        airalo: 'https://www.airalo.com'
+    };
+
     class SchengenCalculator {
         constructor() {
             this.trips = this.loadTrips();
@@ -57,9 +64,11 @@
             this.updateDisplay();
             this.addTripToTimeline(trip);
 
-            // Clear inputs
+            // Clear inputs after adding
             document.getElementById('entryDate').value = '';
-            document.getElementById('exitDate').value = '';
+            // Reset exit to today
+            const exitDateInput = document.getElementById('exitDate');
+            if (exitDateInput) exitDateInput.valueAsDate = new Date();
         }
 
         calculateDays(entry, exit) {
@@ -68,67 +77,94 @@
         }
 
         calculateRemainingDays() {
-    const today = new Date();
-    const lookbackDate = new Date(today);
-    lookbackDate.setDate(lookbackDate.getDate() - 180);
+            const today = new Date();
+            const lookbackDate = new Date(today);
+            lookbackDate.setDate(lookbackDate.getDate() - 180);
 
-    let totalDays = 0;
+            let totalDays = 0;
 
-    this.trips.forEach(trip => {
-        const tripEntry = new Date(trip.entry);
-        const tripExit = new Date(trip.exit);
+            this.trips.forEach(trip => {
+                const tripEntry = new Date(trip.entry);
+                const tripExit = new Date(trip.exit);
 
-        // Count ALL trips (past, current AND future) within 180-day window
-        if (tripExit >= lookbackDate) {
-            const countFrom = tripEntry < lookbackDate ? lookbackDate : tripEntry;
-            // KEY FIX: Remove the "today" cap so future trips count too
-            const countTo = tripExit;
-            
-            if (countTo >= countFrom) {
-                totalDays += this.calculateDays(countFrom, countTo);
-            }
+                // Count trips within the 180-day window (past, current, future planned)
+                if (tripExit >= lookbackDate) {
+                    const countFrom = tripEntry < lookbackDate ? lookbackDate : tripEntry;
+                    const countTo = tripExit;
+                    
+                    if (countTo >= countFrom) {
+                        totalDays += this.calculateDays(countFrom, countTo);
+                    }
+                }
+            });
+
+            return Math.max(0, 90 - totalDays);
         }
-    });
-
-    return Math.max(0, 90 - totalDays);
-}
 
         updateDisplay() {
             const remaining = this.calculateRemainingDays();
             const statusDisplay = document.getElementById('statusDisplay');
             const daysRemainingEl = document.getElementById('daysRemaining');
 
-            if (!statusDisplay || !daysRemainingEl) {
-                console.error('Status elements not found');
-                return;
-            }
+            if (!statusDisplay || !daysRemainingEl) return;
 
             const statusIcon = statusDisplay.querySelector('.status-icon');
             const statusTitle = statusDisplay.querySelector('h3');
 
-            // Update the days number
             daysRemainingEl.textContent = remaining;
-
-            // Remove all status classes
             statusDisplay.classList.remove('warning', 'danger');
-            
-            // Update based on remaining days
+
+            // FIX: Use HTML entities instead of emoji literals to avoid encoding issues
             if (remaining <= 0) {
                 statusDisplay.classList.add('danger');
-                if (statusIcon) statusIcon.textContent = '⚠️';
+                if (statusIcon) statusIcon.innerHTML = '&#x26A0;&#xFE0F;';
                 if (statusTitle) statusTitle.textContent = 'DANGER - Over Limit';
             } else if (remaining <= 10) {
                 statusDisplay.classList.add('danger');
-                if (statusIcon) statusIcon.textContent = '⚠️';
+                if (statusIcon) statusIcon.innerHTML = '&#x26A0;&#xFE0F;';
                 if (statusTitle) statusTitle.textContent = 'DANGER - Critical';
             } else if (remaining <= 30) {
                 statusDisplay.classList.add('warning');
-                if (statusIcon) statusIcon.textContent = '⚡';
+                if (statusIcon) statusIcon.innerHTML = '&#x26A1;';
                 if (statusTitle) statusTitle.textContent = 'WARNING - Low Days';
             } else {
-                if (statusIcon) statusIcon.textContent = '✅';
-                if (statusTitle) statusTitle.textContent = 'SAFE - You\'re Good';
+                if (statusIcon) statusIcon.innerHTML = '&#x2705;';
+                if (statusTitle) statusTitle.textContent = "SAFE - You're Good";
             }
+
+            // Trigger contextual affiliate message after every update
+            this.updateContextualAffiliate(remaining);
+        }
+
+        updateContextualAffiliate(daysRemaining) {
+            const msgEl = document.getElementById('contextualMessage');
+            if (!msgEl) return;
+
+            // Remove all highlights
+            document.querySelectorAll('.affiliate-card').forEach(c => c.classList.remove('affiliate-highlight'));
+
+            let msg = '';
+
+            if (daysRemaining <= 0) {
+                msg = '&#x26A0;&#xFE0F; <strong>You have no Schengen days left.</strong> You cannot enter the Schengen Area right now. Consider a long-stay visa &mdash; Portugal, Spain, and France offer Digital Nomad visas from &euro;280/mo.';
+            } else if (daysRemaining <= 7) {
+                msg = '&#x1F6A8; <strong>Only ' + daysRemaining + ' days left &mdash; critical zone.</strong> Make sure you have travel insurance that covers emergency repatriation if you need to leave sooner than planned.';
+                const c = document.getElementById('cardSafetywing');
+                if (c) c.classList.add('affiliate-highlight');
+            } else if (daysRemaining <= 30) {
+                msg = '&#x23F0; <strong>' + daysRemaining + ' days remaining.</strong> Your Schengen window is closing soon. Set up a Wise account now to handle money fee-free during your break period outside Schengen.';
+                const c = document.getElementById('cardWise');
+                if (c) c.classList.add('affiliate-highlight');
+            } else if (daysRemaining <= 60) {
+                msg = '&#x1F4F1; <strong>' + daysRemaining + ' days remaining &mdash; you\'re in good shape.</strong> Crossing multiple countries? An Airalo eSIM keeps you connected across all 29 Schengen states without roaming charges.';
+                const c = document.getElementById('cardAiralo');
+                if (c) c.classList.add('affiliate-highlight');
+            } else {
+                msg = '&#x2705; <strong>' + daysRemaining + ' days remaining &mdash; you\'re safe.</strong> Protect your trip with travel insurance and fee-free transfers while you explore Europe.';
+            }
+
+            msgEl.innerHTML = msg;
+            msgEl.style.display = 'block';
         }
 
         addTripToTimeline(trip) {
@@ -141,13 +177,13 @@
             
             const removeBtn = document.createElement('button');
             removeBtn.className = 'trip-remove';
-            removeBtn.textContent = '×';
+            removeBtn.textContent = '\u00d7'; // × character — no encoding issue
             removeBtn.onclick = () => this.removeTrip(trip.id);
             
             tripEl.innerHTML = `
                 <div class="trip-info">
                     <div class="trip-dates">
-                        ${this.formatDate(trip.entry)} → ${this.formatDate(trip.exit)}
+                        ${this.formatDate(trip.entry)} &rarr; ${this.formatDate(trip.exit)}
                     </div>
                     <div class="trip-duration">${trip.days} days</div>
                 </div>
@@ -176,6 +212,9 @@
                 this.updateDisplay();
                 const timeline = document.getElementById('tripTimeline');
                 if (timeline) timeline.innerHTML = '';
+                // Hide contextual message when history cleared
+                const msgEl = document.getElementById('contextualMessage');
+                if (msgEl) msgEl.style.display = 'none';
             }
         }
 
@@ -201,6 +240,7 @@
                 const saved = localStorage.getItem('owlfacts_trips');
                 if (saved) {
                     const trips = JSON.parse(saved);
+                    // Render saved trips to timeline on page load
                     trips.forEach(trip => this.addTripToTimeline(trip));
                     return trips;
                 }
@@ -213,29 +253,38 @@
         handleEmailSubmit(e) {
             e.preventDefault();
             const emailInput = e.target.querySelector('input[type="email"]');
-            if (emailInput) {
-                const email = emailInput.value;
-                console.log('Email signup:', email);
-                alert('✓ Thank you! We\'ll send you reminders when you\'re running low on days.');
-                e.target.reset();
+            if (!emailInput || !emailInput.value) return;
+
+            const email = emailInput.value;
+            const remaining = this.calculateRemainingDays();
+
+            // TODO: Replace this with your actual email service (Mailchimp, ConvertKit, etc.)
+            // Example fetch to your backend:
+            // fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email, remaining }) })
+
+            console.log('Email signup:', email, '| Days remaining:', remaining);
+
+            // Show confirmation — replace alert with inline message for better UX
+            const btn = e.target.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.textContent = '&#x2713; You\'re protected!';
+                btn.disabled = true;
             }
+            emailInput.value = '';
+            emailInput.placeholder = 'Subscribed! Check your inbox.';
         }
     }
 
-    // Affiliate link tracking
+    // Affiliate link tracking — uses real URLs from affiliateLinks object
     function initAffiliateLinks() {
-        const affiliateLinks = {
-    safetywing: 'https://safetywing.com/?referenceID=26451862&utm_source=26451862&utm_medium=Ambassador',
-    wise: 'https://wise.com/invite/drhc/3ced2f',
-    airalo: 'https://www.airalo.com'
-};
-        
         document.querySelectorAll('[data-affiliate]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const affiliate = e.currentTarget.dataset.affiliate;
                 if (affiliateLinks[affiliate]) {
-                    window.open(affiliateLinks[affiliate], '_blank');
+                    // Optional: log click for analytics
+                    console.log('Affiliate click:', affiliate);
+                    window.open(affiliateLinks[affiliate], '_blank', 'noopener');
                 }
             });
         });
