@@ -340,8 +340,22 @@ body {
 
 .affiliate-section h4 {
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     color: var(--primary);
+}
+
+/* NEW: Contextual message shown after trip is added */
+.contextual-message {
+    background: #fff;
+    border-left: 4px solid var(--primary);
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px var(--shadow);
+    animation: slide-in 0.3s ease;
 }
 
 .affiliate-links {
@@ -369,8 +383,17 @@ body {
     box-shadow: 0 4px 16px rgba(217, 119, 6, 0.2);
 }
 
+/* NEW: Highlighted affiliate card based on user's situation */
+.affiliate-highlight {
+    border: 2px solid var(--primary) !important;
+    background: #f0f7e6 !important;
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(45, 80, 22, 0.15);
+}
+
 .affiliate-icon {
     font-size: 32px;
+    flex-shrink: 0;
 }
 
 .affiliate-card strong {
@@ -402,6 +425,7 @@ body {
 .email-capture p {
     margin-bottom: 24px;
     opacity: 0.9;
+    font-size: 18px;
 }
 
 .email-form {
@@ -417,16 +441,35 @@ body {
     border: none;
     border-radius: 8px;
     font-size: 16px;
+    font-family: 'Crimson Pro', serif;
+}
+
+.email-form input:focus {
+    outline: 3px solid var(--accent-light);
 }
 
 .email-form button {
     background: var(--accent);
     border: none;
+    white-space: nowrap;
 }
 
 .email-form button:hover {
     background: var(--accent-light);
     color: var(--primary);
+}
+
+.email-form button:disabled {
+    background: var(--success);
+    cursor: default;
+    transform: none;
+}
+
+/* NEW: Trust line under email form */
+.email-trust {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 12px;
 }
 
 /* About Section */
@@ -559,37 +602,49 @@ body {
     .hero-title {
         font-size: 32px;
     }
-    
+
     .form-row {
         grid-template-columns: 1fr;
     }
-    
+
     .button-group {
         flex-direction: column;
     }
-    
+
     .calculator-card {
         padding: 24px;
     }
-    
+
     .status-display {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .days-number {
         font-size: 48px;
     }
-    
+
     .email-form {
         flex-direction: column;
     }
-    
+
     .faq-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .content-article {
         padding: 24px;
+    }
+
+    .affiliate-section {
+        padding: 20px;
+    }
+
+    .email-capture {
+        padding: 28px 20px;
+    }
+
+    .email-capture h3 {
+        font-size: 22px;
     }
 }
